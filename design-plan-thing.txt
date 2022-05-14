@@ -1,4 +1,4 @@
-Independent Factors:
+Human Impacts/Independ factors:
 Amount of Runoff
 CO2
 Sediment Runoff
@@ -8,3 +8,5 @@ pH
 Temp
 Turbidity
 
+Additional Notes:
+Use graph for dependent factors since qualitative data may not be accurate
