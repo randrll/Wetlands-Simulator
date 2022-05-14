@@ -1,0 +1,9 @@
+Independent Factors:
+Amount of Runoff
+CO2
+
+Dependent Factors:
+pH
+Temp
+Turbidity
+
