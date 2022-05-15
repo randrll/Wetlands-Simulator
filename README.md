@@ -1,13 +1,5 @@
 # Wetland-Simulator
-yes
-
-test
-test
-test
-test
-test
-test
-test
-test
-test
-test
+> This is stupid
+> We have no idea what we're doing
+- I hope you had fun using this
+- Lol
