@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1680313429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7719715e7341e34ba00299709363a5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fb7879c297ae704c97d3ef28fca553c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1680313432
@@ -1606,7 +1606,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1680313433}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1680313431}
+        m_TargetAssemblyTypeName: startButtonScript, Assembly-CSharp
+        m_MethodName: LaunchGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1680313433
 MonoBehaviour:
   m_ObjectHideFlags: 0
