@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class script : MonoBehaviour
 {
     public void startSimulation() {
+        Debug.Log("Clicked!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // testing
     }
 }
