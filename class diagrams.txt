@@ -1,0 +1,23 @@
+Class Diagrams
+
+Animal => Seagull, Fish
+
+Animal:
+
+- int totalNumbers; // /shrug
+- int health; // max 5 min 0
+
++ Animal(int n, int h)
++ setNumber(int input) | void
++ setHealth(int health) | void
++ getNumber() | int
++ getHealth() | int
+
+Enviro:
+
+- int pH;
+- int carbonCount;
+- int temp;
+- int turbidity;
+
++ mutator methods blah blah
