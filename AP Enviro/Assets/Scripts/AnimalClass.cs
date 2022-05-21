@@ -21,7 +21,7 @@ public class AnimalClass : MonoBehaviour
         return true;
     }
 
-    void NewRandomNumber()
+    public static void NewRandomNumber()
     {
         int randomNumber;
         int lastNumber;
