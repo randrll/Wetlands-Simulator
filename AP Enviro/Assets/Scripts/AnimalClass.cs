@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalClass : MonoBehaviour
-{
+public class AnimalClass : MonoBehaviour {
     private int hp = -1;
     private int x = -1;
     private int y = -1;
@@ -21,7 +20,7 @@ public class AnimalClass : MonoBehaviour
         return true;
     }
 
-    void NewRandomNumber()
+    public void NewRandomNumber()
     {
         int randomNumber;
         int lastNumber;
