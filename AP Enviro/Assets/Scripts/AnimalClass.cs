@@ -20,27 +20,24 @@ public class AnimalClass : MonoBehaviour
     {
         return true;
     }
-//generates a random number between 1 and 4
+
     void NewRandomNumber()
     {
         int randomNumber;
         int lastNumber;
-        randomNumber = Random.Range(0, 4);
+        randomNumber = Random.Range(0, 10);
         Debug.Log(randomNumber);
     }
-//uses rng numbers to move
-//1 is right
-//2 is left
-//3 is up
-//4 is down
 
-//check if tile in walkable 
-//if so move there, if not generate a new num/direction and check if the tile is walkable 
-    public void move()
+ /*   public void move()
     {
-        //1 m
+        int randomNumber = randomNumber.Range(1, 4);
+        Debug.Log(randomNumber);
+        Debug.Log(randomNumber);
+        Debug.Log(randomNumber);
+        Debug.Log(randomNumber);
     }
- 
+ */
 
     // Start is called before the first frame update
     void Start()
