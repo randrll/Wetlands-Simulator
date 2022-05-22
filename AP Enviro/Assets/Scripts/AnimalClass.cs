@@ -4,7 +4,47 @@ using UnityEngine;
 
 public class AnimalClass : MonoBehaviour
 {
+    [SerializeField] private Transform movePoint; // point where animal wants to move
+    [SerializeField] private LayerMask waterLayer;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        movePoint.parent = null;
+        loopMovementFunctionBecauseUnityIsStupid();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        //test
+    }
+
+    /* this is making me want to cry - randrll
+    *   
+    *   generates 2 integers from -1 - 1, one being vertical and one being horizontal based on the diagram below
+    *   
+    *  -1 0 1
+    *   0 X 
+    *   1
+    *
+    */
+
+    public void randomlyMoveToValidSpot() {
+        int horizontal = (int) NewRandomNumber(-1,2);
+        int vertical = (int) NewRandomNumber(-1,2);
+
+        if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.2f, waterLayer)) {
+            movePoint.position += new Vector3(horizontal, vertical, 0f);
+        }
+         
+    }
+
+    public IEnumerator loopMovementFunctionBecauseUnityIsStupid() {
+        while (true) {
+            randomlyMoveToValidSpot();
+            yield return new WaitForSecondsRealtime(5);
+        }
+    }
 
     /*
     0 = dead
@@ -33,6 +73,8 @@ public class AnimalClass : MonoBehaviour
         this.x = x;
         this.y = y;
     }
+
+
 
     public bool Walkable( /* data that tells us about tiles around animal  */)
     {
@@ -147,17 +189,5 @@ public class AnimalClass : MonoBehaviour
                 moved = true; //only if we moved
             }
         }
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    { 
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
