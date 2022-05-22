@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class environment : MonoBehaviour 
 {
-    private int pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
-    private int carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
+    private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
+    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
+
+
 
     [SerializeField] private Slider carbonSlider, sedimentRSlider, nutrientRSlider, municipalWasteSlider, sewageSlider, heavyMetalsSlider;
 
@@ -17,7 +19,9 @@ public class environment : MonoBehaviour
     }
 
     public void Update() {
-
+      
+        handleEnvironment();
+        Debug.Log("waterTemp is " + waterTemp);
     }
 
     /* neutral values (ie no effect)
@@ -30,32 +34,85 @@ public class environment : MonoBehaviour
     *   oxygen demand = 0.5 per animal
     */
     public environment() {
-        pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 0; biodiversity = 0; dissolvedOxygen = 10; biochemicalOxygenDemand = 5;
+        pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 0; biodiversity = 100; dissolvedOxygen = 100; biochemicalOxygenDemand = 50;
     }
 
     public void setFactorValues() {
         Debug.Log("Clicked.");
-        carbonAtmo = (int) carbonSlider.value;
-        sediment = (int) sedimentRSlider.value;
-        nutrient = (int) nutrientRSlider.value;
-        municipalWaste = (int) municipalWasteSlider.value;
-        sewage = (int) sewageSlider.value;
-        heavyMetals = (int) heavyMetalsSlider.value;
+
+
+
+        carbonAtmo = (double) carbonSlider.value;
+        sediment = (double) sedimentRSlider.value;
+        nutrient = (double) nutrientRSlider.value;
+        municipalWaste = (double) municipalWasteSlider.value;
+        sewage = (double) sewageSlider.value;
+        heavyMetals = (double) heavyMetalsSlider.value;
         Debug.Log("carbon: " + carbonAtmo + "\nsediment: " + sediment + "\nnutrient: " + nutrient + "\ntrash: " + municipalWaste + "\nsewage: " + sewage + "\nheavymetals: " + heavyMetals);
-    }   
+    }
+
+    //prints all enviormetn stats
+    public void stats() 
+    {
+        Debug.Log("pH is " + pH);
+        Debug.Log("carbonInWater is " + carbonInWater);
+        Debug.Log("waterTemp is " + waterTemp);
+        Debug.Log("turbidity is " + turbidity);
+        Debug.Log("biodiversity is " + biodiversity);
+        Debug.Log("dissolvedOxygen is " + dissolvedOxygen);
+        Debug.Log("biochemicalOxygenDemand is " + biochemicalOxygenDemand);
+    }
+
+
+
 
     /* enviro formula methods
     *
     *   carbonAtmo = carbonInWater goes up
     *   carbonInWater = pH and water temp goes up
     *   sediment = turbidity goes down
-    *   nutrient = oxygen goes down
+    *   nutrient = oxygen goes down 
     *   municipalwaste = tubidity goes down
     *   sewage = turbidity goes down
     *
-    */ 
-    public void handleEnvironment() {        
-        if (carbonAtmo > 0 && carbonInWater < (carbonAtmo / 2)) {
+    */
+
+    // private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
+    //    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
+    public void handleEnvironment() {
+        waterTemp += carbonAtmo / 5000;
+        pH -= carbonAtmo / 3000;
+
+        waterTemp += sediment / 5000;
+        turbidity += sediment / 5000;
+
+        dissolvedOxygen -= nutrient / 1000;
+        biochemicalOxygenDemand += nutrient / 1000;
+
+        biodiversity -= municipalWaste / 5000;
+
+        biodiversity -= sewage / 5000;
+        dissolvedOxygen -= sewage / 1000;
+        biochemicalOxygenDemand += sewage / 1000;
+
+        biodiversity -= heavyMetals / 1000;
+
+
+        if(pH < 0)
+        {
+            pH = 0;
+        }
+        if (dissolvedOxygen < 0)
+        {
+            dissolvedOxygen = 0;
+        }
+        if (biodiversity < 0)
+        {
+            biodiversity = 0;
+        }
+
+
+        /*   if (carbonAtmo > 0 && carbonInWater < (carbonAtmo / 2)) {
             carbonInWater += 1;
         }
         
@@ -70,62 +127,64 @@ public class environment : MonoBehaviour
         if (waterTemp > 58) {
             dissolvedOxygen =- (waterTemp - 58) / 100;
         }
+
+         */
     }
 
     // setter and getter methods here:  
-    public int getpH() {
+    public double getpH() {
         return pH;
     }
 
-    public int getCarbonWater() {
+    public double getCarbonWater() {
         return carbonInWater;
     }
 
-    public int getWaterTemp() {
+    public double getWaterTemp() {
         return waterTemp;
     }
 
-    public int getTurbidity() {
+    public double getTurbidity() {
         return turbidity;
     }
 
-    public int getBiodiversity() {
+    public double getBiodiversity() {
         return biodiversity;
     }
 
-    public int getDissolvedOxygen() {
+     public double getDissolvedOxygen() {
         return dissolvedOxygen;
     }
 
-    public int getOxyDemand() {
+    public double getOxyDemand() {
         return biochemicalOxygenDemand;
     }
 
-    public void setpH(int input) {
+    public void setpH(double input) {
         pH = input;
     }
 
-    public void setCarbonInWater(int input) {
+    public void setCarbonInWater(double input) {
         carbonInWater = input;
     }
 
-    public void setWaterTemp(int input) {
+    public void setWaterTemp(double input) {
         waterTemp = input;
     }
 
-    public void setTurbidity(int input) {
+    public void setTurbidity(double input) {
         turbidity = input;
     }
 
-    public void setBiodiverse(int input) {
+    public void setBiodiverse(double input) {
         biodiversity = input;
     }
 
-    public void setOxygen(int input) {
+    public void setOxygen(double input) {
         dissolvedOxygen = input;
     }
 
-    public void setOxyDemand(int input) {
+    public void setOxyDemand(double input) {
         biochemicalOxygenDemand = input;
     }
 }
