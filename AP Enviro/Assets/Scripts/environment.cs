@@ -24,6 +24,12 @@ public class environment : MonoBehaviour
       
         handleEnvironment();
         Debug.Log("waterTemp is " + waterTemp);
+        pHNumText.text = pH.ToString();
+        turbidityNumText.text = turbidity.ToString();
+        oxygenNumText.text = dissolvedOxygen.ToString();
+        waterTempNumText.text = waterTemp.ToString();
+        oxygenDemandNumText.text = biochemicalOxygenDemand.ToString();
+        biodiversityNumText.text = biodiversity.ToString();
     }
 
     /* neutral values (ie no effect)
