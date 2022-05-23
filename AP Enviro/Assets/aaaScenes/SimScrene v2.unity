@@ -3055,7 +3055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250546143517412311, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_Name
-      value: graph (4)
+      value: biodiversityGraph
       objectReference: {fileID: 0}
     - target: {fileID: 8872220801184255536, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_text
@@ -3315,7 +3315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250546143517412311, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_Name
-      value: graph (5)
+      value: demandGraph
       objectReference: {fileID: 0}
     - target: {fileID: 8872220801184255536, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_text
@@ -4035,7 +4035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7250546143517412311, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_Name
-      value: graph (3)
+      value: oxygenGraph
       objectReference: {fileID: 0}
     - target: {fileID: 8872220801184255536, guid: a0a2ef9e7e6d6b94596066ead86f6b2c, type: 3}
       propertyPath: m_text
@@ -6160,10 +6160,10 @@ MonoBehaviour:
   submitButton: {fileID: 274425693}
   pHNumText: {fileID: 4985597372126751903}
   turbidityNumText: {fileID: 183361330}
-  oxygenNumText: {fileID: 1105098555}
-  waterTempNumText: {fileID: 1059706948}
-  oxygenDemandNumText: {fileID: 199102631}
-  biodiversityNumText: {fileID: 566087250}
+  oxygenNumText: {fileID: 1059706948}
+  waterTempNumText: {fileID: 1105098555}
+  oxygenDemandNumText: {fileID: 566087250}
+  biodiversityNumText: {fileID: 199102631}
 --- !u!4 &1419916484
 Transform:
   m_ObjectHideFlags: 0
