@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class environment : MonoBehaviour 
 {
@@ -14,6 +15,7 @@ public class environment : MonoBehaviour
 
     [SerializeField] private Button submitButton;
 
+    [SerializeField] private TextMeshProUGUI pHNumText, turbidityNumText, oxygenNumText, waterTempNumText, oxygenDemandNumText, biodiversityNumText;
     public void Start() {
         submitButton.onClick.AddListener(setFactorValues);
     }
