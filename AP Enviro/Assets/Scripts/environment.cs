@@ -23,7 +23,7 @@ public class environment : MonoBehaviour
     public void Update() {
       
         handleEnvironment();
-        Debug.Log("waterTemp is " + waterTemp);
+        
         pHNumText.text = pH.ToString();
         turbidityNumText.text = turbidity.ToString();
         oxygenNumText.text = dissolvedOxygen.ToString();

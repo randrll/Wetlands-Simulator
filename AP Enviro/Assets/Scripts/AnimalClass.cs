@@ -10,13 +10,14 @@ public class AnimalClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Start sim");
         movePoint.parent = null;
-        loopMovementFunctionBecauseUnityIsStupid();
+        
     }
     // Update is called once per frame
     void Update()
     {
-        //test
+        randomlyMoveToValidSpot();
     }
 
     /* this is making me want to cry - randrll
@@ -30,19 +31,21 @@ public class AnimalClass : MonoBehaviour
     */
 
     public void randomlyMoveToValidSpot() {
+        Debug.Log("Moving");
         int horizontal = (int) NewRandomNumber(-1,2);
         int vertical = (int) NewRandomNumber(-1,2);
-
-        if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.2f, waterLayer)) {
-            movePoint.position += new Vector3(horizontal, vertical, 0f);
-        }
-         
+        Debug.Log("Horizontal: " + horizontal + "\nVertical: " + vertical + "\nShould move now...");
+        movePoint.position += new Vector3(horizontal, vertical, 0f);
+                 
     }
 
     public IEnumerator loopMovementFunctionBecauseUnityIsStupid() {
         while (true) {
+            Debug.Log("loop start");
             randomlyMoveToValidSpot();
+            Debug.Log("Before wait");
             yield return new WaitForSecondsRealtime(5);
+            Debug.Log("loop end");
         }
     }
 
