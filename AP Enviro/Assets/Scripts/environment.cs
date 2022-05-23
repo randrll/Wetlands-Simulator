@@ -23,7 +23,10 @@ public class environment : MonoBehaviour
     public void Update() {
       
         handleEnvironment();
-        Debug.Log("waterTemp is " + waterTemp);
+
+
+
+
         pHNumText.text = pH.ToString();
         turbidityNumText.text = turbidity.ToString();
         oxygenNumText.text = dissolvedOxygen.ToString();
@@ -77,7 +80,7 @@ public class environment : MonoBehaviour
     /* enviro formula methods
     *
     *   carbonAtmo = carbonInWater goes up
-    *   carbonInWater = pH and water temp goes up
+    *   carbonInWater = pH and water temp goes upS
     *   sediment = turbidity goes down
     *   nutrient = oxygen goes down 
     *   municipalwaste = tubidity goes down
@@ -88,10 +91,10 @@ public class environment : MonoBehaviour
     // private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
     //    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
     public void handleEnvironment() {
-        waterTemp += carbonAtmo / 5000;
-        pH -= carbonAtmo / 3000;
+        waterTemp += carbonAtmo / 500;
+        pH -= carbonAtmo / 5000;
 
-        waterTemp += sediment / 5000;
+        waterTemp += sediment / 500;
         turbidity += sediment / 5000;
 
         dissolvedOxygen -= nutrient / 1000;
@@ -103,10 +106,20 @@ public class environment : MonoBehaviour
         dissolvedOxygen -= sewage / 1000;
         biochemicalOxygenDemand += sewage / 1000;
 
-        biodiversity -= heavyMetals / 1000;
+        biodiversity -= (heavyMetals*heavyMetals) / 1000;
 
 
-        if(pH < 0)
+        if(waterTemp > 65)
+        {
+            biodiversity -= (waterTemp*(waterTemp/3)) / 10000;
+        }
+
+        if (pH <  6.5)
+        {
+            biodiversity -= ((20-pH)*(10-pH) / 1000);
+        }
+
+        if (pH < 0)
         {
             pH = 0;
         }
