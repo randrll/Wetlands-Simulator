@@ -23,10 +23,7 @@ public class environment : MonoBehaviour
     public void Update() {
       
         handleEnvironment();
-
-
-
-
+        
         pHNumText.text = pH.ToString();
         turbidityNumText.text = turbidity.ToString();
         oxygenNumText.text = dissolvedOxygen.ToString();
