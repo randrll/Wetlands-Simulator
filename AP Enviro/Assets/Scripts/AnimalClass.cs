@@ -5,14 +5,18 @@ using UnityEngine;
 public class AnimalClass : MonoBehaviour
 {
     [SerializeField] private Transform movePoint; // point where animal wants to move
+    private Vector3 previousPoint;
     [SerializeField] private LayerMask waterLayer;
+    [SerializeField] private LayerMask border;
+    [SerializeField] private int moveSpeed;
+    [SerializeField] private float waitTime;
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Start sim");
+
         movePoint.parent = null;
-        
     }
     // Update is called once per frame
     void Update()
@@ -25,28 +29,33 @@ public class AnimalClass : MonoBehaviour
     *   generates 2 integers from -1 - 1, one being vertical and one being horizontal based on the diagram below
     *   
     *  -1 0 1
-    *   0 X 
-    *   1
+    *     X 0
+    *      -1
     *
     */
 
     public void randomlyMoveToValidSpot() {
-        Debug.Log("Moving");
-        int horizontal = (int) NewRandomNumber(-1,2);
-        int vertical = (int) NewRandomNumber(-1,2);
-        Debug.Log("Horizontal: " + horizontal + "\nVertical: " + vertical + "\nShould move now...");
-        movePoint.position += new Vector3(horizontal, vertical, 0f);
-                 
-    }
+        Debug.Log("Moving");        
+        int horizontal = (int) Random.Range( -2f, 2f );
+        int vertical = (int) Random.Range (-2f, 2f );
+        previousPoint = movePoint.position;
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-    public IEnumerator loopMovementFunctionBecauseUnityIsStupid() {
-        while (true) {
-            Debug.Log("loop start");
-            randomlyMoveToValidSpot();
-            Debug.Log("Before wait");
-            yield return new WaitForSecondsRealtime(5);
-            Debug.Log("loop end");
+        if (Vector3.Distance(transform.position, movePoint.position) == 0f) {
+            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.3f, waterLayer)) {
+                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.3f, border)) {
+                    Debug.Log("works");
+                    movePoint.position += new Vector3(horizontal, vertical, 0f);
+                }
+            }
         }
+    }
+    /*
+    * Draws red circle hitbox for movepoint for above method
+    */
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere (movePoint.position, 0.3f);
     }
 
     /*
@@ -87,7 +96,6 @@ public class AnimalClass : MonoBehaviour
     public static int  NewRandomNumber(int min, int max)
     {
         int randomNumber;
-        int lastNumber;
         randomNumber = Random.Range(min, max);
         return randomNumber;
     }
