@@ -42,7 +42,7 @@ public class environment : MonoBehaviour
     *   oxygen demand = 0.5 per animal
     */
     public environment() {
-        pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 0; biodiversity = 100; dissolvedOxygen = 100; biochemicalOxygenDemand = 50;
+        pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 3; biodiversity = 100; dissolvedOxygen = 10; biochemicalOxygenDemand = 10;
     }
 
     public void setFactorValues() {
@@ -95,25 +95,45 @@ public class environment : MonoBehaviour
         turbidity += sediment / 5000;
 
         dissolvedOxygen -= nutrient / 1000;
-        biochemicalOxygenDemand += nutrient / 1000;
+        biochemicalOxygenDemand = 10 - dissolvedOxygen;
 
         biodiversity -= municipalWaste / 5000;
 
         biodiversity -= sewage / 5000;
+
         dissolvedOxygen -= sewage / 1000;
         biochemicalOxygenDemand += sewage / 1000;
 
         biodiversity -= (heavyMetals*heavyMetals) / 1000;
 
+        if(dissolvedOxygen < 3)
+        {
+            biodiversity -= (dissolvedOxygen * dissolvedOxygen) / 100;
+        }
+
+        if(turbidity > 5)
+        {
+            biodiversity -= (turbidity * turbidity) / 2000;
+        }
 
         if(waterTemp > 65)
         {
-            biodiversity -= (waterTemp*(waterTemp/3)) / 10000;
+            biodiversity -= (waterTemp*(waterTemp/3)) / 20000;
+            dissolvedOxygen -= waterTemp / 20000;
+        }
+
+        if(waterTemp < 45)
+        {
+            biodiversity -= ( (100-waterTemp) * ( (100-waterTemp) / 3)) / 20000;
         }
 
         if (pH <  6.5)
         {
-            biodiversity -= ((20-pH)*(10-pH) / 1000);
+            biodiversity -= ((20-pH)*(10-pH) / 2000);
+        }
+        if(pH > 8.5)
+        {
+            biodiversity -= (pH * pH) / 2000;
         }
 
         if (pH < 0)
@@ -129,24 +149,11 @@ public class environment : MonoBehaviour
             biodiversity = 0;
         }
 
-
-        /*   if (carbonAtmo > 0 && carbonInWater < (carbonAtmo / 2)) {
-            carbonInWater += 1;
-        }
-        
-        if (carbonInWater > 0 && pH > (carbonAtmo - carbonInWater)) {
-            pH =- 1;
+        if(turbidity < 0)
+        {
+            turbidity = 0;
         }
 
-        if (pH < 7 && waterTemp < (pH * 10)) {
-            waterTemp += 2;
-        }
-
-        if (waterTemp > 58) {
-            dissolvedOxygen =- (waterTemp - 58) / 100;
-        }
-
-         */
     }
 
     // setter and getter methods here:  
