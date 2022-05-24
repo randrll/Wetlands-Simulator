@@ -5,11 +5,15 @@ using UnityEngine;
 public class AnimalClass : MonoBehaviour
 {
     [SerializeField] private Transform movePoint; // point where animal wants to move
-    private Vector3 previousPoint;
-    [SerializeField] private LayerMask waterLayer;
-    [SerializeField] private LayerMask border;
-    [SerializeField] private int moveSpeed;
-    [SerializeField] private float waitTime;
+    [SerializeField] private LayerMask waterLayer; // water layer with water cols
+    [SerializeField] private LayerMask border; // border layer with border cols
+
+    [SerializeField] private int moveSpeed; // movement speed
+    [SerializeField] private float radialSize; // hitbox size
+    [SerializeField] private float randomCheckRange; // how big the random selection area is
+
+
+    [SerializeField] private bool isLand;
 
     // Start is called before the first frame update
     void Start()
@@ -36,16 +40,41 @@ public class AnimalClass : MonoBehaviour
 
     public void randomlyMoveToValidSpot() {
         Debug.Log("Moving");        
-        int horizontal = (int) Random.Range( -2f, 2f );
-        int vertical = (int) Random.Range (-2f, 2f );
-        previousPoint = movePoint.position;
+        int horizontal = (int) Random.Range( -randomCheckRange,randomCheckRange);
+        int vertical = (int) Random.Range (-randomCheckRange, randomCheckRange);
+
+        // move to movepoint
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
+        // move movepoint to valid spot
         if (Vector3.Distance(transform.position, movePoint.position) == 0f) {
-            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.3f, waterLayer)) {
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), 0.3f, border)) {
-                    Debug.Log("works");
-                    movePoint.position += new Vector3(horizontal, vertical, 0f);
+            if (isLand == true) {    
+                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, waterLayer)) {
+                    if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, border)) {
+                        Debug.Log("works");
+
+                        if (horizontal == -1) {
+                            transform.localScale = new Vector3(-1f, 1f, 1f);
+                        } else {
+                            transform.localScale = new Vector3(1f, 1f, 1f);
+                        }
+
+                        movePoint.position += new Vector3(horizontal, vertical, 0f);
+                    }
+                }
+            } else {
+                if (Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, waterLayer)) {
+                    if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, border)) {
+                        Debug.Log("works");
+
+                        if (horizontal == -1) {
+                            transform.localScale = new Vector3(-1f, 1f, 1f);
+                        } else {
+                            transform.localScale = new Vector3(1f, 1f, 1f);
+                        }
+
+                        movePoint.position += new Vector3(horizontal, vertical, 0f);
+                    }
                 }
             }
         }
@@ -55,7 +84,7 @@ public class AnimalClass : MonoBehaviour
     */
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere (movePoint.position, 0.3f);
+        Gizmos.DrawWireSphere (movePoint.position, radialSize);
     }
 
     /*
