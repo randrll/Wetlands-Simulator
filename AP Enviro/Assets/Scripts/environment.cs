@@ -9,21 +9,55 @@ public class environment : MonoBehaviour
     private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
     private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
 
-
-
     [SerializeField] private Slider carbonSlider, sedimentRSlider, nutrientRSlider, municipalWasteSlider, sewageSlider, heavyMetalsSlider;
 
     [SerializeField] private Button submitButton;
 
     [SerializeField] private TextMeshProUGUI pHNumText, turbidityNumText, oxygenNumText, waterTempNumText, oxygenDemandNumText, biodiversityNumText;
+
+    [SerializeField] private GameObject seagullPreFab;
+    [SerializeField] private GameObject fishPreFab;
+    [SerializeField] private GameObject lSpawn0;
+    [SerializeField] private GameObject lSpawn1;
+    [SerializeField] private GameObject lSpawn2;
+    [SerializeField] private GameObject lSpawn3;
+    private GameObject[] lSpawns = new GameObject[4];
+
+    [SerializeField] private GameObject wSpawn;
+
+    private List<GameObject> seagulls = new List<GameObject>();
+    private List<GameObject> fishes = new List<GameObject>();
+
+    public void spawnSeagull() {
+
+    }
+
+    public void AutoSpawnAndDeleteFish() {
+        // int numberOfSupposedFish = (int) (biodiversity / 2);
+        // int numberOfCurrentFish = 0;
+
+        // while (numberOfCurrentFish != numberOfSupposedFish) {
+        //     if (numberOfCurrentFish < numberOfSupposedFish) {
+        //         GameObject clone = Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
+        //         clone.name += "1";
+        //         fishes.Add(clone);
+        //         numberOfCurrentFish++;
+        //         Debug.Log("Spawned fish. Supposed to stop at: " + numberOfSupposedFish + "\nFish count: " + numberOfCurrentFish);
+        //     } else if (numberOfCurrentFish > numberOfSupposedFish) {
+
+        //     }
+        // }
+    }
+
     public void Start() {
         submitButton.onClick.AddListener(setFactorValues);
     }
 
     public void Update() {
-      
-        handleEnvironment();
-        
+        AutoSpawnAndDeleteFish();
+        Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
+
+        // chart num
         pHNumText.text = pH.ToString();
         turbidityNumText.text = turbidity.ToString();
         oxygenNumText.text = dissolvedOxygen.ToString();
@@ -59,7 +93,7 @@ public class environment : MonoBehaviour
         Debug.Log("carbon: " + carbonAtmo + "\nsediment: " + sediment + "\nnutrient: " + nutrient + "\ntrash: " + municipalWaste + "\nsewage: " + sewage + "\nheavymetals: " + heavyMetals);
     }
 
-    //prints all enviormetn stats
+    //prints all evniro stats
     public void stats() 
     {
         Debug.Log("pH is " + pH);
@@ -70,9 +104,6 @@ public class environment : MonoBehaviour
         Debug.Log("dissolvedOxygen is " + dissolvedOxygen);
         Debug.Log("biochemicalOxygenDemand is " + biochemicalOxygenDemand);
     }
-
-
-
 
     /* enviro formula methods
     *
@@ -154,62 +185,5 @@ public class environment : MonoBehaviour
             turbidity = 0;
         }
 
-    }
-
-    // setter and getter methods here:  
-    public double getpH() {
-        return pH;
-    }
-
-    public double getCarbonWater() {
-        return carbonInWater;
-    }
-
-    public double getWaterTemp() {
-        return waterTemp;
-    }
-
-    public double getTurbidity() {
-        return turbidity;
-    }
-
-    public double getBiodiversity() {
-        return biodiversity;
-    }
-
-     public double getDissolvedOxygen() {
-        return dissolvedOxygen;
-    }
-
-    public double getOxyDemand() {
-        return biochemicalOxygenDemand;
-    }
-
-    public void setpH(double input) {
-        pH = input;
-    }
-
-    public void setCarbonInWater(double input) {
-        carbonInWater = input;
-    }
-
-    public void setWaterTemp(double input) {
-        waterTemp = input;
-    }
-
-    public void setTurbidity(double input) {
-        turbidity = input;
-    }
-
-    public void setBiodiverse(double input) {
-        biodiversity = input;
-    }
-
-    public void setOxygen(double input) {
-        dissolvedOxygen = input;
-    }
-
-    public void setOxyDemand(double input) {
-        biochemicalOxygenDemand = input;
     }
 }

@@ -38,8 +38,7 @@ public class AnimalClass : MonoBehaviour
     *
     */
 
-    public void randomlyMoveToValidSpot() {
-        Debug.Log("Moving");        
+    public void randomlyMoveToValidSpot() {    
         int horizontal = (int) Random.Range( -randomCheckRange,randomCheckRange);
         int vertical = (int) Random.Range (-randomCheckRange, randomCheckRange);
 
@@ -51,7 +50,6 @@ public class AnimalClass : MonoBehaviour
             if (isLand == true) {    
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, waterLayer)) {
                     if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, border)) {
-                        Debug.Log("works");
 
                         if (horizontal == -1) {
                             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -65,7 +63,6 @@ public class AnimalClass : MonoBehaviour
             } else {
                 if (Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, waterLayer)) {
                     if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(horizontal, vertical, 0f), radialSize, border)) {
-                        Debug.Log("works");
 
                         if (horizontal == -1) {
                             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -82,16 +79,11 @@ public class AnimalClass : MonoBehaviour
     /*
     * Draws red circle hitbox for movepoint for above method
     */
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere (movePoint.position, radialSize);
-    }
 
     /*
     0 = dead
     1 = sick
     2 = okay
-    3 = very healthy
 
     Walkable (not done): checks if tile is walkable
     reproduce(done): returns if two animals reproduce 
@@ -114,120 +106,10 @@ public class AnimalClass : MonoBehaviour
         this.x = x;
         this.y = y;
     }
-
-
-
-    public bool Walkable( /* data that tells us about tiles around animal  */)
-    {
-        return true;
-    }
-
     public static int  NewRandomNumber(int min, int max)
     {
         int randomNumber;
         randomNumber = Random.Range(min, max);
         return randomNumber;
-    }
-
-
-    public static bool reproduce(int hp, int x1, int y1, int x2, int y2, int distance)
-    {
-       if (Mathf.Abs(x1 - x2) <= distance && Mathf.Abs(y1 - y2) <= distance)
-       {
-
-            if(hp == 3)
-            {
-                if(NewRandomNumber(1,10) <= 8)
-                {
-                    return true;
-                }
-            }
-            if(hp == 2)
-            {
-                if(NewRandomNumber(1,10) <= 5)
-                {
-                    return true;
-                }
-            }
-            if(hp == 1)
-            {
-                if(NewRandomNumber(1,10) == 1)
-                {
-                    return true;
-                }
-            }
-            
-       }
-       return false;
-    }
-
-
-    //method for testing
-    public static void test()
-    {
-        Debug.Log("healty");
-        for (int i = 0; i < 10; i++)
-        {
-            if (reproduce(3, 1, 1, 1, 1, 10))
-            {
-                Debug.Log("reproduce");
-            }
-            else
-            {
-                Debug.Log("reproduce failed");
-            }
-        }
-
-        Debug.Log("okay");
-        for (int i = 0; i < 10; i++)
-        {
-            if (reproduce(2, 1, 1, 1, 1, 10))
-            {
-                Debug.Log("reproduce");
-            }
-            else
-            {
-                Debug.Log("reproduce failed");
-            }
-        }
-    }
-    //uses rng numbers to move
-    //1 is right
-    //2 is left
-    //3 is up
-    //4 is down
-
-    //check if tile in walkable 
-    //if so move there, if not generate a new num/direction and check if the tile is walkable 
-    
-    
-    public void move(int increaseX, int increaseY)
-    {
-        bool moved = false;
-
-        while (!moved)
-        {
-            int direction = NewRandomNumber(1, 4);
-            if (direction == 1)
-            {
-                //call walkable to see if right is open if so move there
-                moved = true; //only if we moved
-            }
-            else if (direction == 2)
-            {
-                //call walkable to see if left is open if so move there
-                moved = true; //only if we moved
-            }
-            else if (direction == 3)
-            {
-                //call walkable to see if up is open if so move there
-                moved = true; //only if we moved 
-            }
-            else
-            {
-                //call walkable to see if down is open if so move there
-                moved = true; //only if we moved
-            }
-        }
     }
 }
