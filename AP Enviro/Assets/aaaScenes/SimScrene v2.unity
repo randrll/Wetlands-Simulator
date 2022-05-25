@@ -9340,10 +9340,11 @@ MonoBehaviour:
   biodiversityNumText: {fileID: 199102631}
   seagullPreFab: {fileID: 3056902035808417298, guid: 819b5538943fc184db82a772c01886f1, type: 3}
   fishPreFab: {fileID: 5737077659685039738, guid: 84df9d30538e6d741b00ddd1a565b795, type: 3}
-  lSpawn0: {fileID: 2099635653}
-  lSpawn1: {fileID: 364864169}
-  lSpawn2: {fileID: 1204671982}
-  lSpawn3: {fileID: 165102874}
+  lSpawns:
+  - {fileID: 2099635653}
+  - {fileID: 364864169}
+  - {fileID: 1204671982}
+  - {fileID: 165102874}
   wSpawn: {fileID: 759933479}
 --- !u!4 &1419916484
 Transform:

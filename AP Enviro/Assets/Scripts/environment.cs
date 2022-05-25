@@ -17,56 +17,30 @@ public class environment : MonoBehaviour
 
     [SerializeField] private GameObject seagullPreFab;
     [SerializeField] private GameObject fishPreFab;
-    [SerializeField] private GameObject lSpawn0;
-    [SerializeField] private GameObject lSpawn1;
-    [SerializeField] private GameObject lSpawn2;
-    [SerializeField] private GameObject lSpawn3;
-    private GameObject[] lSpawns = new GameObject[4];
+
+    [SerializeField] private GameObject[] lSpawns;
 
     [SerializeField] private GameObject wSpawn;
 
     private List<GameObject> seagulls = new List<GameObject>();
     private List<GameObject> fishes = new List<GameObject>();
+    private List<GameObject> seagullsMovePoints = new List<GameObject>();
+    private List<GameObject> fishesMovePoints = new List<GameObject>();
 
-    public void spawnSeagull() {
+    private int numberOfSupposedBirds;
+    private int numberOfCurrentBirds = 0;
 
-    }
+    private int numberOfSupposedFish;
+    private int numberOfCurrentFish = 0;
 
-    public void AutoSpawnAndDeleteFish() {
-        // int numberOfSupposedFish = (int) (biodiversity / 2);
-        // int numberOfCurrentFish = 0;
 
-        // while (numberOfCurrentFish != numberOfSupposedFish) {
-        //     if (numberOfCurrentFish < numberOfSupposedFish) {
-        //         GameObject clone = Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
-        //         clone.name += "1";
-        //         fishes.Add(clone);
-        //         numberOfCurrentFish++;
-        //         Debug.Log("Spawned fish. Supposed to stop at: " + numberOfSupposedFish + "\nFish count: " + numberOfCurrentFish);
-        //     } else if (numberOfCurrentFish > numberOfSupposedFish) {
 
-        //     }
-        // }
-    }
 
-    public void Start() {
-        submitButton.onClick.AddListener(setFactorValues);
-    }
 
-    public void Update() {
-        AutoSpawnAndDeleteFish();
-        Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
-        handleEnvironment();
-        
 
-        // chart num
-        pHNumText.text = pH.ToString();
-        turbidityNumText.text = turbidity.ToString();
-        oxygenNumText.text = dissolvedOxygen.ToString();
-        waterTempNumText.text = waterTemp.ToString();
-        oxygenDemandNumText.text = biochemicalOxygenDemand.ToString();
-        biodiversityNumText.text = biodiversity.ToString();
-    }
+
+
+
 
     /* neutral values (ie no effect)
     *   pH = 7
@@ -79,7 +53,71 @@ public class environment : MonoBehaviour
     */
     public environment() {
         pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 3; biodiversity = 100; dissolvedOxygen = 10; biochemicalOxygenDemand = 10;
+        numberOfSupposedBirds = (int) (biodiversity / 10);
+        numberOfSupposedFish = (int) (biodiversity / 2); 
     }
+
+
+    public void AutoSpawnAndDeleteSeagull() {
+        while (numberOfCurrentBirds != numberOfSupposedBirds) {
+            if (numberOfCurrentBirds < numberOfSupposedBirds) {
+                GameObject clone = Instantiate(seagullPreFab, lSpawns[(int) Random.Range(0,3)].transform.position, Quaternion.identity);
+                clone.name += numberOfCurrentBirds.ToString();
+                seagulls.Add(clone); 
+                seagullsMovePoints.Add(clone.transform.GetChild(1).gameObject); // gets the movepoint object
+                numberOfCurrentBirds++;
+            } else if (numberOfCurrentBirds > numberOfSupposedBirds && numberOfCurrentBirds > 0) {
+                Destroy(seagulls[seagulls.Count - 1], 0f);
+                Destroy(seagullsMovePoints[seagullsMovePoints.Count - 1], 0f);
+                seagulls.RemoveAt(seagulls.Count - 1);
+                seagullsMovePoints.RemoveAt(seagullsMovePoints.Count - 1);
+                numberOfCurrentBirds--;
+            }
+        }
+
+    }
+
+    public void AutoSpawnAndDeleteFish() {
+        while (numberOfCurrentFish != numberOfSupposedFish) {
+            if (numberOfCurrentFish < numberOfSupposedFish) {
+                GameObject clone = Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
+                clone.name += numberOfCurrentFish.ToString();
+                fishes.Add(clone);
+                fishesMovePoints.Add(clone.transform.GetChild(1).gameObject);
+                numberOfCurrentFish++;
+            } else if (numberOfCurrentFish > numberOfSupposedFish && numberOfCurrentFish > 0) {
+                Destroy(fishes[fishes.Count - 1], 0f);
+                Destroy(fishesMovePoints[fishesMovePoints.Count - 1], 0f);
+                fishes.RemoveAt(fishes.Count - 1);
+                fishesMovePoints.RemoveAt(fishesMovePoints.Count - 1);
+                numberOfCurrentFish--;
+            }
+        }
+    }
+
+    public void Start() {
+        submitButton.onClick.AddListener(setFactorValues);        
+    }
+
+    public void Update() {
+        handleEnvironment();
+
+        // update animal numbers
+        numberOfSupposedBirds = (int) (biodiversity / 10);
+        numberOfSupposedFish = (int) (biodiversity / 2);     
+        AutoSpawnAndDeleteFish();
+        AutoSpawnAndDeleteSeagull();
+
+        // chart num
+        pHNumText.text = pH.ToString();
+        turbidityNumText.text = turbidity.ToString();
+        oxygenNumText.text = dissolvedOxygen.ToString();
+        waterTempNumText.text = waterTemp.ToString();
+        oxygenDemandNumText.text = biochemicalOxygenDemand.ToString();
+        biodiversityNumText.text = biodiversity.ToString();
+    }
+
+
 
     public void setFactorValues() {
         Debug.Log("Clicked.");
