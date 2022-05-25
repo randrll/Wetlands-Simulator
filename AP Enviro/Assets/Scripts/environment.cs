@@ -246,20 +246,16 @@ public class environment : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
-
+    public void resetValues() {
+        pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 3; biodiversity = 100; dissolvedOxygen = 10; biochemicalOxygenDemand = 10;
+        carbonAtmo = 0; sediment = 0; nutrient = 0; municipalWaste = 0; sewage = 0; heavyMetals = 0; 
+    }
 
     /*
     *
     *
     * G E T T E R  A N D  S E T  M E T H O D S  H E R E
+    *
     *
     */  
     public double getpH() {
