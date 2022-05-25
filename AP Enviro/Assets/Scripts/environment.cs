@@ -6,43 +6,48 @@ using TMPro;
 
 public class environment : MonoBehaviour 
 {
-    private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
-    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
+    // Environment Elements
+    private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand;
 
+    // Independent Factors (Human Elements)
+    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; 
+
+    // Sliders
     [SerializeField] private Slider carbonSlider, sedimentRSlider, nutrientRSlider, municipalWasteSlider, sewageSlider, heavyMetalsSlider;
 
+    // Button to activate Sliders
     [SerializeField] private Button submitButton;
 
+    // Graph Value Text
     [SerializeField] private TextMeshProUGUI pHNumText, turbidityNumText, oxygenNumText, waterTempNumText, oxygenDemandNumText, biodiversityNumText;
 
+    // Animal PreFabs (Models / Sprites)
     [SerializeField] private GameObject seagullPreFab;
     [SerializeField] private GameObject fishPreFab;
 
+    // Spawnpoints on land
     [SerializeField] private GameObject[] lSpawns;
 
+
+    // Spawnpoint(s) on water
     [SerializeField] private GameObject wSpawn;
 
+    // List of animals and their movepoints
     private List<GameObject> seagulls = new List<GameObject>();
     private List<GameObject> fishes = new List<GameObject>();
     private List<GameObject> seagullsMovePoints = new List<GameObject>();
     private List<GameObject> fishesMovePoints = new List<GameObject>();
 
+    // Values of animals and what they should be
     private int numberOfSupposedBirds;
     private int numberOfCurrentBirds = 0;
 
     private int numberOfSupposedFish;
     private int numberOfCurrentFish = 0;
 
-
-
-
-
-
-
-
-
-
-    /* neutral values (ie no effect)
+    /*  Constructor:
+    *   
+    *   neutral values (ie no effect)
     *   pH = 7
     *   carbonInWater = 0;
     *   waterTemp = 58 // water temp (F) off the port of los angeles (coldest temp)
@@ -50,49 +55,14 @@ public class environment : MonoBehaviour
     *   biodiversity = !?!?
     *   dissolvedOxygen = 10 // max
     *   oxygen demand = 0.5 per animal
+    *
+    *
+    *
     */
     public environment() {
         pH = 7; carbonInWater = 0; waterTemp = 58; turbidity = 3; biodiversity = 100; dissolvedOxygen = 10; biochemicalOxygenDemand = 10;
         numberOfSupposedBirds = (int) (biodiversity / 10);
         numberOfSupposedFish = (int) (biodiversity / 2); 
-    }
-
-
-    public void AutoSpawnAndDeleteSeagull() {
-        while (numberOfCurrentBirds != numberOfSupposedBirds) {
-            if (numberOfCurrentBirds < numberOfSupposedBirds) {
-                GameObject clone = Instantiate(seagullPreFab, lSpawns[(int) Random.Range(0,3)].transform.position, Quaternion.identity);
-                clone.name += numberOfCurrentBirds.ToString();
-                seagulls.Add(clone); 
-                seagullsMovePoints.Add(clone.transform.GetChild(1).gameObject); // gets the movepoint object
-                numberOfCurrentBirds++;
-            } else if (numberOfCurrentBirds > numberOfSupposedBirds && numberOfCurrentBirds > 0) {
-                Destroy(seagulls[seagulls.Count - 1], 0f);
-                Destroy(seagullsMovePoints[seagullsMovePoints.Count - 1], 0f);
-                seagulls.RemoveAt(seagulls.Count - 1);
-                seagullsMovePoints.RemoveAt(seagullsMovePoints.Count - 1);
-                numberOfCurrentBirds--;
-            }
-        }
-
-    }
-
-    public void AutoSpawnAndDeleteFish() {
-        while (numberOfCurrentFish != numberOfSupposedFish) {
-            if (numberOfCurrentFish < numberOfSupposedFish) {
-                GameObject clone = Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
-                clone.name += numberOfCurrentFish.ToString();
-                fishes.Add(clone);
-                fishesMovePoints.Add(clone.transform.GetChild(1).gameObject);
-                numberOfCurrentFish++;
-            } else if (numberOfCurrentFish > numberOfSupposedFish && numberOfCurrentFish > 0) {
-                Destroy(fishes[fishes.Count - 1], 0f);
-                Destroy(fishesMovePoints[fishesMovePoints.Count - 1], 0f);
-                fishes.RemoveAt(fishes.Count - 1);
-                fishesMovePoints.RemoveAt(fishesMovePoints.Count - 1);
-                numberOfCurrentFish--;
-            }
-        }
     }
 
     public void Start() {
@@ -117,8 +87,58 @@ public class environment : MonoBehaviour
         biodiversityNumText.text = biodiversity.ToString();
     }
 
+    /* Spawns and deletes seagulls based on the biodiversity number 
+    *
+    * Biodiversity handled each frame by the update() method
+    *
+    */
+    public void AutoSpawnAndDeleteSeagull() {
+        while (numberOfCurrentBirds != numberOfSupposedBirds) {
+            if (numberOfCurrentBirds < numberOfSupposedBirds) {
+                GameObject clone = Instantiate(seagullPreFab, lSpawns[(int) Random.Range(0,3)].transform.position, Quaternion.identity);
+                clone.name += numberOfCurrentBirds.ToString();
+                seagulls.Add(clone); 
+                seagullsMovePoints.Add(clone.transform.GetChild(1).gameObject); // gets the movepoint object
+                numberOfCurrentBirds++;
+            } else if (numberOfCurrentBirds > numberOfSupposedBirds && numberOfCurrentBirds > 0) {
+                Destroy(seagulls[seagulls.Count - 1], 0f);
+                Destroy(seagullsMovePoints[seagullsMovePoints.Count - 1], 0f);
+                seagulls.RemoveAt(seagulls.Count - 1);
+                seagullsMovePoints.RemoveAt(seagullsMovePoints.Count - 1);
+                numberOfCurrentBirds--;
+            }
+        }
 
+    }
 
+    /* Spawns and deletes fishes based on the biodiversity number 
+    *
+    * Biodiversity handled each frame by the update() method
+    *
+    */
+    public void AutoSpawnAndDeleteFish() {
+        while (numberOfCurrentFish != numberOfSupposedFish) {
+            if (numberOfCurrentFish < numberOfSupposedFish) {
+                GameObject clone = Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
+                clone.name += numberOfCurrentFish.ToString();
+                fishes.Add(clone);
+                fishesMovePoints.Add(clone.transform.GetChild(1).gameObject);
+                numberOfCurrentFish++;
+            } else if (numberOfCurrentFish > numberOfSupposedFish && numberOfCurrentFish > 0) {
+                Destroy(fishes[fishes.Count - 1], 0f);
+                Destroy(fishesMovePoints[fishesMovePoints.Count - 1], 0f);
+                fishes.RemoveAt(fishes.Count - 1);
+                fishesMovePoints.RemoveAt(fishesMovePoints.Count - 1);
+                numberOfCurrentFish--;
+            }
+        }
+    }
+
+    /*  Method to change the factors
+    *
+    *   Update at every frame
+    *
+    */ 
     public void setFactorValues() {
         Debug.Log("Clicked.");
 
@@ -224,6 +244,78 @@ public class environment : MonoBehaviour
         {
             turbidity = 0;
         }
-
     }
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    *
+    *
+    * G E T T E R  A N D  S E T  M E T H O D S  H E R E
+    *
+    */  
+    public double getpH() {
+        return pH;
+    }
+
+    public double getCarbonWater() {
+        return carbonInWater;
+    }
+
+    public double getWaterTemp() {
+        return waterTemp;
+    }
+
+    public double getTurbidity() {
+        return turbidity;
+    }
+
+    public double getBiodiversity() {
+        return biodiversity;
+    }
+
+     public double getDissolvedOxygen() {
+        return dissolvedOxygen;
+    }
+
+    public double getOxyDemand() {
+        return biochemicalOxygenDemand;
+    }
+
+    public void setpH(double input) {
+        pH = input;
+    }
+
+    public void setCarbonInWater(double input) {
+        carbonInWater = input;
+    }
+
+    public void setWaterTemp(double input) {
+        waterTemp = input;
+    }
+
+    public void setTurbidity(double input) {
+        turbidity = input;
+    }
+
+    public void setBiodiverse(double input) {
+        biodiversity = input;
+    }
+
+    public void setOxygen(double input) {
+        dissolvedOxygen = input;
+    }
+
+    public void setOxyDemand(double input) {
+        biochemicalOxygenDemand = input;
+    }
+
 }
