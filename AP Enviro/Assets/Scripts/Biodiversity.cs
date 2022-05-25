@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowGraph : MonoBehaviour
+public class Window_Graph : MonoBehaviour
 {
     [SerializeField] private Sprite circleSprite;
     private RectTransform graphContainer;
 
     private void Awake()
     {
-        graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
+                Debug.Log("MADE A CIRCLE");
+       
+        graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
 
-        CreateCircle(new Vector2(200, 200));
+      
+      //  add(environment.getPH*2,4);
+        add(50,4);
+       // add(50,4);
+        //add(50,4);
+
     }
 
     private void CreateCircle(Vector2 anchoredPosition)
@@ -22,9 +29,17 @@ public class WindowGraph : MonoBehaviour
         gameObject.GetComponent<Image>().sprite = circleSprite;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
-        rectTransform.sizeDelta = new Vector2(11, 11);
+        rectTransform.sizeDelta = new Vector2(3, 3);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
+        Debug.Log("MADE A CIRCLE");
     }
+    
 
+    private void add(int y, int x){
+ 
+
+        CreateCircle(new Vector2 (x, y));
+        
+    }
 }
