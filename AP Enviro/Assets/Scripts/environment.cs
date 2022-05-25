@@ -56,6 +56,8 @@ public class environment : MonoBehaviour
     public void Update() {
         AutoSpawnAndDeleteFish();
         Instantiate(fishPreFab, wSpawn.transform.position, Quaternion.identity);
+        handleEnvironment();
+        
 
         // chart num
         pHNumText.text = pH.ToString();
