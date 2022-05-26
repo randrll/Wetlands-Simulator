@@ -42,8 +42,14 @@ public class environment : MonoBehaviour
     private int numberOfSupposedBirds;
     private int numberOfCurrentBirds = 0;
 
-    private int numberOfSupposedFish;
-    private int numberOfCurrentFish = 0;
+    private double  numberOfSupposedFish;
+    private double numberOfCurrentFish = 0;
+    private double Co2= 0;
+    private double sed = 0;
+    private double nut = 0;
+    private double waste = 0;
+    private double sew = 0;
+    private double metal = 0; 
 
     /*  Constructor:
     *   
@@ -179,57 +185,188 @@ public class environment : MonoBehaviour
     // private double pH, carbonInWater, waterTemp, turbidity, biodiversity, dissolvedOxygen, biochemicalOxygenDemand; // enviro elements
     //    private double carbonAtmo, sediment, nutrient, municipalWaste, sewage, heavyMetals; // iv
     public void handleEnvironment() {
-        waterTemp += carbonAtmo / 500;
-        pH -= carbonAtmo / 5000;
 
-        waterTemp += sediment / 500;
-        turbidity += sediment / 5000;
-
-        dissolvedOxygen -= nutrient / 1000;
-        biochemicalOxygenDemand = 10 - dissolvedOxygen;
-
-        biodiversity -= municipalWaste / 5000;
-
-        biodiversity -= sewage / 5000;
-
-        dissolvedOxygen -= sewage / 1000;
-        biochemicalOxygenDemand += sewage / 1000;
-
-        biodiversity -= (heavyMetals*heavyMetals) / 1000;
-
-        if(dissolvedOxygen < 3)
-        {
-            biodiversity -= (dissolvedOxygen * dissolvedOxygen) / 100;
+        if (Co2 < 10000  && carbonAtmo < 0){    
+            waterTemp += carbonAtmo / 500;
+            pH -= carbonAtmo / 5000;
+            Co2 -= carbonAtmo;
+        }
+        if (carbonAtmo > 0){    
+            waterTemp += carbonAtmo / 500;
+            pH -= carbonAtmo / 5000;
+            Co2 -= carbonAtmo;
+        }
+ 
+        if(sed < 200 && sediment < 0){
+            Debug.Log("decrease");
+            turbidity += sediment / 5000;
+            waterTemp += sediment / 500;
+            sed -= sediment ;
+        }
+        if(sediment > 0){
+            Debug.Log("increase");
+             turbidity += sediment / 5000;   
+             waterTemp += sediment/500;       
+            sed -= sediment ; 
         }
 
-        if(turbidity > 5)
-        {
-            biodiversity -= (turbidity * turbidity) / 2000;
+        if (nut < 500  && nutrient < 0){  
+            dissolvedOxygen -= nutrient / 1000;
+           
+            nut -= nutrient;
+        }
+        if(nutrient > 0){
+            dissolvedOxygen -= nutrient / 1000;
+            
+            nut -= nutrient;
+        }
+        
+        biochemicalOxygenDemand = 11 - dissolvedOxygen;
+        if(biochemicalOxygenDemand < 0){
+            biochemicalOxygenDemand = 0;
+        }
+        if(waste < 100 && municipalWaste < 0){
+            biodiversity -= municipalWaste / 2000;
+            waste -= municipalWaste;
+        }
+        if (municipalWaste > 0){
+            waste -= municipalWaste;
+            biodiversity -= municipalWaste / 2000;
+
         }
 
-        if(waterTemp > 65)
-        {
-            biodiversity -= (waterTemp*(waterTemp/3)) / 20000;
-            dissolvedOxygen -= waterTemp / 20000;
+        if(sew < 100 &&  sewage < 0){    
+            biodiversity -= sewage / 2000;
+             dissolvedOxygen -= sewage / 1000;           
+            sew -= sewage;
+        }
+        if(sewage > 0 ){
+            biodiversity -= sewage / 2000;            
+            dissolvedOxygen -= sewage / 1000;
+            biochemicalOxygenDemand += sewage / 1000;
+            sew -= sewage;
+        }
+                
+                
+        if(metal < 100 && heavyMetals < 0){    
+            biodiversity += (heavyMetals*heavyMetals) / 1000;
+            metal -= heavyMetals;
+        }
+        if(heavyMetals > 0){
+            biodiversity -= (heavyMetals*heavyMetals) / 1000;
+            metal -= heavyMetals;
         }
 
-        if(waterTemp < 45)
-        {
-            biodiversity -= ( (100-waterTemp) * ( (100-waterTemp) / 3)) / 20000;
-        }
+            if(biochemicalOxygenDemand > 2)
+            {
+                if( ( nutrient / 1000 + sewage/1000) < 0){
+                    biodiversity += (biochemicalOxygenDemand * biochemicalOxygenDemand) / 100;        
+                }else{
+                    biodiversity -= (biochemicalOxygenDemand * biochemicalOxygenDemand) / 100;                    
+                }
+
+
+            }
+
+            if(turbidity > 5)
+            {
+                biodiversity -= (turbidity * turbidity) / 2000;
+ //               waterTemp += (turbidity * turbidity) / 6000;
+            } 
+ 
+
+//            dissolvedOxygen -= waterTemp / 40000;
+            if(waterTemp > 65)
+            {
+                if( (carbonAtmo / 500 +  sediment/500) < 0.0){
+                    Debug.Log("here");
+                    biodiversity += (waterTemp*(waterTemp/3)) / 20000;                    
+                }else{
+                  biodiversity -= (waterTemp*(waterTemp/3)) / 20000;                    
+                }
+
+            }else if(waterTemp > 62){
+                if( (carbonAtmo / 500 +  sediment/500) < 0){
+                    biodiversity += (waterTemp*(waterTemp/5)) / 20000;                    
+                }else{
+                    biodiversity -= (waterTemp*(waterTemp/5)) / 20000;                    
+                }
+
+            }
+
+
+            if(waterTemp < 45)
+            {
+                if( (carbonAtmo / 500 +  sediment/500) > 0){
+                    biodiversity += ( (100-waterTemp) * ( (100-waterTemp) / 3)) / 20000;                   
+                }else{
+                  biodiversity -= ( (100-waterTemp) * ( (100-waterTemp) / 3)) / 20000;                    
+                }
+
+            }else if(waterTemp < 53){
+                if( (carbonAtmo / 500 +  sediment/500) > 0){
+                   biodiversity -= ( (100-waterTemp) * ( (100-waterTemp) / 5)) / 20000;                 
+                }else{
+                    biodiversity -= ( (100-waterTemp) * ( (100-waterTemp) / 5)) / 20000;                    
+                }
+
+            }
 
         if (pH <  6.5)
         {
-            biodiversity -= ((20-pH)*(10-pH) / 2000);
+            if(carbonAtmo < 0){
+                biodiversity += ((25-pH)*(25-pH) / 2000);
+            }else{
+                biodiversity -= ((25-pH)*(25-pH) / 2000);           
+            }
+
+        }else if( pH < 6.7){
+             if(carbonAtmo < 0){
+                 biodiversity += ((20-pH)*(20-pH) / 4000);
+            }else{
+                biodiversity -= ((20-pH)*(20-pH) / 4000);
+            }
+           
+        }else if(pH < 7){
+            if(carbonAtmo < 0){
+            biodiversity += pH/2000;
+            }else{
+            biodiversity -= pH/2000;
+            }
+
         }
         if(pH > 8.5)
         {
-            biodiversity -= (pH * pH) / 2000;
+            if(carbonAtmo > 0){
+               biodiversity += (pH * pH) / 2000;
+            }else{
+              biodiversity -= (pH * pH) / 2000;
+            }
+        }else if(pH > 8){
+            if(carbonAtmo > 0){
+             biodiversity += (pH * pH) / 4000;
+            }else{
+             biodiversity -= (pH * pH) / 4000;
+            }
+ 
+        }else if(pH > 7){
+            if(carbonAtmo > 0){
+               biodiversity += pH/2000;     
+            }else{
+              biodiversity -= pH/2000;     
+            }
+               
         }
 
         if (pH < 0)
         {
             pH = 0;
+        }
+        if(waterTemp > 100){
+            waterTemp = 100;
+        }
+        if(pH > 11){
+            pH =11;
         }
         if (dissolvedOxygen < 0)
         {
@@ -315,3 +452,4 @@ public class environment : MonoBehaviour
     }
 
 }
+  
