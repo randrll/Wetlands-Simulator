@@ -212,7 +212,7 @@ public class environment : MonoBehaviour
 
         if (nut < 500  && nutrient < 0){  
             dissolvedOxygen -= nutrient / 1000;
-            biochemicalOxygenDemand = 10 - dissolvedOxygen;
+           
             nut -= nutrient;
         }
         if(nutrient > 0){
@@ -221,7 +221,7 @@ public class environment : MonoBehaviour
             nut -= nutrient;
         }
         
-        biochemicalOxygenDemand = 10 - dissolvedOxygen;
+        biochemicalOxygenDemand = 11 - dissolvedOxygen;
         if(biochemicalOxygenDemand < 0){
             biochemicalOxygenDemand = 0;
         }
