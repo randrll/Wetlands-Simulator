@@ -358,6 +358,9 @@ public class environment : MonoBehaviour
                
         }
 
+        if(biodiversity >= 100){
+            biodiversity = 100;
+        }
         if (pH < 0)
         {
             pH = 0;
