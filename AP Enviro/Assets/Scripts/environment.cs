@@ -85,12 +85,12 @@ public class environment : MonoBehaviour
         AutoSpawnAndDeleteSeagull();
 
         // chart num
-        pHNumText.text = pH.ToString();
-        turbidityNumText.text = turbidity.ToString();
-        oxygenNumText.text = dissolvedOxygen.ToString();
-        waterTempNumText.text = waterTemp.ToString();
-        oxygenDemandNumText.text = biochemicalOxygenDemand.ToString();
-        biodiversityNumText.text = biodiversity.ToString();
+        pHNumText.text = (Mathf.Floor((float) (pH * 1000)) / 1000).ToString(); 
+        turbidityNumText.text = (Mathf.Floor((float) (turbidity * 1000)) / 1000).ToString(); 
+        oxygenNumText.text = (Mathf.Floor((float) (dissolvedOxygen * 1000)) / 1000).ToString(); 
+        waterTempNumText.text = (Mathf.Floor((float) (waterTemp * 1000)) / 1000).ToString(); 
+        oxygenDemandNumText.text = (Mathf.Floor((float) (biochemicalOxygenDemand * 1000)) / 1000).ToString(); 
+        biodiversityNumText.text = (Mathf.Floor((float) (biodiversity * 1000)) / 1000).ToString(); 
     }
 
     /* Spawns and deletes seagulls based on the biodiversity number 
