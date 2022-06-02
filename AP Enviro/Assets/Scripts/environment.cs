@@ -42,14 +42,14 @@ public class environment : MonoBehaviour
     private int numberOfSupposedBirds;
     private int numberOfCurrentBirds = 0;
 
-    private double  numberOfSupposedFish;
+    private double numberOfSupposedFish;
     private double numberOfCurrentFish = 0;
-    private double Co2= 0;
-    private double sed = 0;
-    private double nut = 0;
-    private double waste = 0;
-    private double sew = 0;
-    private double metal = 0; 
+    public double Co2 = 0;
+    public double sed = 0;
+    public double nut = 0;
+    public double waste = 0;
+    public double sew = 0;
+    public double metal = 0; 
 
     /*  Constructor:
     *   

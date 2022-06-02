@@ -20,5 +20,12 @@ public class resetFactors : MonoBehaviour {
         metals.value = 0;
 
         enviroscript.resetValues(); // comment
+
+        enviroscript.Co2 = 0;
+        enviroscript.sed = 0;
+        enviroscript.nut = 0;
+        enviroscript.waste = 0;
+        enviroscript.sew = 0;
+        enviroscript.metal = 0;
    }
 }
